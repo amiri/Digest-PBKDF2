@@ -123,6 +123,8 @@ Amiri Barksdale, E<lt>abarksdale@campusexplorer.comE<gt>
 
 Copyright (c) 2011 by Campus Explorer, Inc.
 
+L<http://campusexplorer.com>
+
 =head1 LICENSE
 
 This library is free software; you can redistribute it and/or modify it
