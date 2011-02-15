@@ -4,7 +4,6 @@ use strict;
 use warnings;
 use Test::More qw/no_plan/;
 use Test::Exception;
-use Data::Dumper::Concise::Sugar;
 use Scalar::Util qw/refaddr/;
 use lib "lib";
 use_ok "Digest::PBKDF2";
@@ -79,14 +78,11 @@ is( $orig_digest,
 diag "I will try no salt this time";
 
 my $orig2 = Digest::PBKDF2->new;
-diag Dwarn $orig2;
 
 lives_ok( sub { $orig2->add('jazz') }, "I can add the password chunk" );
-diag Dwarn $orig2;
 
 my $clone2;
 lives_ok( sub { $clone2 = $orig2->clone }, "I can clone my object" );
-diag Dwarn $clone2;
 isnt(
     refaddr $orig2,
     refaddr $clone2,
@@ -103,25 +99,3 @@ is( $orig2_digest,
     '$PBKDF2$HMACSHA1:1000:$zpYCcE4kGAQD37LhEQa56B7/kCc=',
     "Making sure it is..."
 );
-
-END {
-    use ExtUtils::Installed;
-    use List::MoreUtils qw/any/;
-    my $instmod = ExtUtils::Installed->new();
-
-    diag Dwarn \%INC;
-    my @modules_loaded
-        = map { s/(.+?)\.pm//g; $1 } map { s/\//::/g; $_ } keys %INC;
-    diag Dwarn \@modules_loaded;
-    my @all_modules = $instmod->modules;
-    diag scalar @all_modules;
-    my @filtered = grep { $_ ~~ @all_modules } @modules_loaded;
-    diag scalar @filtered;
-    diag Dwarn \@filtered;
-    foreach my $module (@modules_loaded) {
-        next unless $module ~~ @all_modules;
-        my $version = $instmod->version($module) ? $instmod->version($module) : '???';
-        diag "$module => $version";
-    }
-
-}
