@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use Test::More qw/no_plan/;
 use Test::Exception;
-use Devel::Dwarn;
+use Data::Dumper::Concise::Sugar;
 use Scalar::Util qw/refaddr/;
 use lib "lib";
 use_ok "Digest::PBKDF2";
@@ -58,7 +58,7 @@ is( $orig->{_data},  'cooljazz', "And the original remains intact" );
 lives_ok( sub { $clone->add('cooljazz') }, "I can put back the clone data" );
 
 ###
-my ( $clone_digest, $orig_digest );
+my ( $clone_digest, $clone2_digest, $orig_digest, $orig2_digest );
 
 ( $clone_digest, $orig_digest ) = ( $clone->digest, $orig->digest );
 
@@ -79,23 +79,49 @@ is( $orig_digest,
 diag "I will try no salt this time";
 
 my $orig2 = Digest::PBKDF2->new;
+diag Dwarn $orig2;
 
 lives_ok( sub { $orig2->add('jazz') }, "I can add the password chunk" );
+diag Dwarn $orig2;
 
-lives_ok( sub { $clone = $orig2->clone }, "I can clone my object" );
+my $clone2;
+lives_ok( sub { $clone2 = $orig2->clone }, "I can clone my object" );
+diag Dwarn $clone2;
 isnt(
     refaddr $orig2,
-    refaddr $clone,
+    refaddr $clone2,
     "Cloning gives me a new Digest::PBKDF2 object"
 );
-( $clone_digest, $orig_digest ) = ( $clone->digest, $orig2->digest );
-is( $clone_digest, $orig_digest,
+( $clone2_digest, $orig2_digest ) = ( $clone2->digest, $orig2->digest );
+is( $clone2_digest, $orig2_digest,
     "Clone and orginal produce the same string" );
-is( $clone_digest,
+is( $clone2_digest,
     '$PBKDF2$HMACSHA1:1000:$zpYCcE4kGAQD37LhEQa56B7/kCc=',
     "And that string is what it should be"
 );
-is( $orig_digest,
+is( $orig2_digest,
     '$PBKDF2$HMACSHA1:1000:$zpYCcE4kGAQD37LhEQa56B7/kCc=',
     "Making sure it is..."
 );
+
+END {
+    use ExtUtils::Installed;
+    use List::MoreUtils qw/any/;
+    my $instmod = ExtUtils::Installed->new();
+
+    diag Dwarn \%INC;
+    my @modules_loaded
+        = map { s/(.+?)\.pm//g; $1 } map { s/\//::/g; $_ } keys %INC;
+    diag Dwarn \@modules_loaded;
+    my @all_modules = $instmod->modules;
+    diag scalar @all_modules;
+    my @filtered = grep { $_ ~~ @all_modules } @modules_loaded;
+    diag scalar @filtered;
+    diag Dwarn \@filtered;
+    foreach my $module (@modules_loaded) {
+        next unless $module ~~ @all_modules;
+        my $version = $instmod->version($module) ? $instmod->version($module) : '???';
+        diag "$module => $version";
+    }
+
+}
