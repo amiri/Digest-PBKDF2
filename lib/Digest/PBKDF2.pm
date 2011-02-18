@@ -3,7 +3,7 @@ package Digest::PBKDF2;
 use strict;
 use warnings;
 use parent "Digest::base";
-use Crypt::PBKDF2;
+use Crypt::PBKDF2 0.110461;
 
 #ABSTRACT: This module is a subclass of Digest using the Crypt::PBKDF2 algorithm.
 
