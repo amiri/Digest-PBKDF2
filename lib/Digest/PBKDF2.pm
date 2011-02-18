@@ -3,7 +3,7 @@ package Digest::PBKDF2;
 use strict;
 use warnings;
 use parent "Digest::base";
-use Crypt::PBKDF2 0.101170;
+use Crypt::PBKDF2;
 
 #ABSTRACT: This module is a subclass of Digest using the Crypt::PBKDF2 algorithm.
 
@@ -48,7 +48,7 @@ sub digest {
     my $data = join( '', @string );
 
     my $crypt = Crypt::PBKDF2->new( salt_len => length($salt||'') );
-    my $return = $crypt->generate( $data, salt => $salt );
+    my $return = $crypt->generate( $data, $salt );
     $self->reset;
     $return;
 }
