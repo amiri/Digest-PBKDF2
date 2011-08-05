@@ -65,11 +65,11 @@ is( $clone_digest, $orig_digest,
     "Clone and orginal produce the same string" );
 
 is( $clone_digest,
-    '{X-PBKDF2}HMACSHA1:AAAD6A:Y29vbA==:6LZU9raZ5BzrMRo0mwa8Z7ON+Mc=',
+    '$PBKDF2$HMACSHA1:1000:Y29vbA==$6LZU9raZ5BzrMRo0mwa8Z7ON+Mc=',
     "And that string is what it should be"
 );
 is( $orig_digest,
-    '{X-PBKDF2}HMACSHA1:AAAD6A:Y29vbA==:6LZU9raZ5BzrMRo0mwa8Z7ON+Mc=',
+    '$PBKDF2$HMACSHA1:1000:Y29vbA==$6LZU9raZ5BzrMRo0mwa8Z7ON+Mc=',
     "Making sure it is..."
 );
 
@@ -92,10 +92,10 @@ isnt(
 is( $clone2_digest, $orig2_digest,
     "Clone and orginal produce the same string" );
 is( $clone2_digest,
-    '{X-PBKDF2}HMACSHA1:AAAD6A::zpYCcE4kGAQD37LhEQa56B7/kCc=',
+    '$PBKDF2$HMACSHA1:1000:$zpYCcE4kGAQD37LhEQa56B7/kCc=',
     "And that string is what it should be"
 );
 is( $orig2_digest,
-    '{X-PBKDF2}HMACSHA1:AAAD6A::zpYCcE4kGAQD37LhEQa56B7/kCc=',
+    '$PBKDF2$HMACSHA1:1000:$zpYCcE4kGAQD37LhEQa56B7/kCc=',
     "Making sure it is..."
 );

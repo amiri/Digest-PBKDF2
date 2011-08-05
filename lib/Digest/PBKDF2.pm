@@ -13,7 +13,8 @@ BEGIN {
 
 sub new {
     my ( $class, %params ) = @_;
-    return bless { _entries => [], _data => undef, }, $class;
+    my $encoding = $params{encoding} || 'crypt';
+    return bless { _entries => [], _data => undef, encoding => $encoding }, $class;
 }
 
 sub clone {
@@ -21,6 +22,7 @@ sub clone {
     my $clone = {
         _data    => $self->{_data},
         _entries => $self->{_entries},
+        encoding => $self->{encoding},
     };
     return bless $clone, ref $self;
 }
@@ -38,6 +40,7 @@ sub reset {
     my $self = shift;
     delete $self->{_data};
     delete $self->{_entries};
+    delete $self->{encoding};
     $self;
 }
 
@@ -51,7 +54,7 @@ sub digest {
         if @{ $self->{_entries} } > 1;
     my $data = join( '', @string );
 
-    my $crypt = Crypt::PBKDF2->new( salt_len => length($salt||'') );
+    my $crypt = Crypt::PBKDF2->new( encoding => $self->{encoding}, salt_len => length($salt||'') );
     my $return = $crypt->generate( $data, $salt );
     $self->reset;
     $return;
@@ -73,7 +76,8 @@ to do post-salts.
 
 =head1 SYNOPSIS
 
-    my $digest = Digest::PBKDF2->new;
+    my $digest = Digest::PBKDF2->new;   # Or...
+    my $digest = Digest::PBKDF2->new(encoding => 'ldap');
     $digest->add('mysalt');             # salt = 'mysalt'
     $digest->add('k3wLP@$$w0rd');       # password = 'k3wLP@$$w0rd'
 
@@ -90,7 +94,8 @@ That's about it.
 
 =item new
 
-Create a new Digest::PBKDF2 object.
+Create a new Digest::PBKDF2 object. This defaults to using the "crypt" encoding
+available in Crypt::PBKDF2--please see L<Crypt::PBKDF2> for details.
 
 =item clone
 
