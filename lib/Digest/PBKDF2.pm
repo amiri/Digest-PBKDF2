@@ -3,9 +3,11 @@ package Digest::PBKDF2;
 use strict;
 use warnings;
 use parent "Digest::base";
-use Crypt::PBKDF2 0.110461;
+use Crypt::PBKDF2 0.112020;
 
-our $VERSION = '0.005';
+BEGIN {
+	# VERSION
+}
 
 #ABSTRACT: This module is a subclass of Digest using the Crypt::PBKDF2 algorithm.
 
