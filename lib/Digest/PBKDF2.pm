@@ -54,7 +54,7 @@ sub digest {
         if @{ $self->{_entries} } > 1;
     my $data = join( '', @string );
 
-    my $crypt = Crypt::PBKDF2->new( encoding => $self->{encoding}, salt_len => length($salt||'') );
+    my $crypt = Crypt::PBKDF2->new( encoding => ($self->{encoding}||'ldap'), salt_len => length($salt||'') );
     my $return = $crypt->generate( $data, $salt );
     $self->reset;
     $return;
@@ -94,7 +94,7 @@ That's about it.
 
 =item new
 
-Create a new Digest::PBKDF2 object. This defaults to using the "crypt" encoding
+Create a new Digest::PBKDF2 object. This defaults to using the "ldap" encoding
 available in Crypt::PBKDF2--please see L<Crypt::PBKDF2> for details.
 
 =item clone
@@ -130,7 +130,7 @@ Amiri Barksdale, E<lt>abarksdale@campusexplorer.comE<gt>
 
 =head1 COPYRIGHT
 
-Copyright (c) 2011 by Campus Explorer, Inc.
+Copyright (c) 2014 by Campus Explorer, Inc.
 
 L<http://www.campusexplorer.com>
 
