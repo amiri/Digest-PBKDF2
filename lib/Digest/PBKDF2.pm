@@ -3,7 +3,7 @@ package Digest::PBKDF2;
 use strict;
 use warnings;
 use parent "Digest::base";
-use Crypt::PBKDF2 0.112020;
+use Crypt::PBKDF2 0.161520;
 
 BEGIN {
 	# VERSION
@@ -130,7 +130,7 @@ Amiri Barksdale, E<lt>abarksdale@campusexplorer.comE<gt>
 
 =head1 COPYRIGHT
 
-Copyright (c) 2014 by Campus Explorer, Inc.
+Copyright (c) 2017 by Campus Explorer, Inc.
 
 L<http://www.campusexplorer.com>
 
