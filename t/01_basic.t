@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use Test::More qw/no_plan/;
+use Test::More 1.302120 qw/no_plan/;
 use Test::Exception;
 use Scalar::Util qw/refaddr/;
 use lib "lib";

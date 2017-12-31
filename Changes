@@ -1,5 +1,8 @@
 Revision history for {{$dist->name}}
 
+0.012   2017-12-30
+    - Require newer Test::More
+
 0.011   2017-12-30
     - Fix test by updating version constraint on
       Crypt::PBKDF2
