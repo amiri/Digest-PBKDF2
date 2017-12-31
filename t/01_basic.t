@@ -2,10 +2,10 @@
 
 use strict;
 use warnings;
-use Test::More 1.302120 qw/no_plan/;
-use Test::Exception;
-use Scalar::Util qw/refaddr/;
 use lib "lib";
+use Test::More 1.302120 tests => 25;
+use Test::Exception 0.43;
+use Scalar::Util 1.49 qw/refaddr/;
 
 use_ok "Digest::PBKDF2";
 
